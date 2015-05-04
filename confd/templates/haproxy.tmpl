@@ -32,16 +32,21 @@ defaults
 
 frontend http-in
     bind *:8080
-  
+{{range $service := ls "/services"}}
+    use_backend {{$service}}
+    {{end}}
+
 {{range $service := ls "/services"}}
 backend {{$service}}
     balance leastconn
+    option httpclose
+    option forwardfor
     {{range $upstream := ls (printf "/services/%s/upstreams" $service)}}
-    server {{$upstream}} {{printf "/services/%s/upstreams/%s" $service $upstream | getv}} cookie A check
+    server {{$upstream}} {{printf "/services/%s/upstreams/%s" $service $upstream | getv}} check
     {{end}}
 {{end}}
-
-
+  
+    
 listen MyStats
     mode http
     bind 0.0.0.0:1000

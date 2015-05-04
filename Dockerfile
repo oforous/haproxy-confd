@@ -1,9 +1,12 @@
-FROM yaronr/debian-wheezy
+FROM tianon/docker-brew-debian
 
-MAINTAINER yaronr
+MAINTAINER oforous
 
 ENV ETCD_NODE 172.17.42.1:4001
 ENV confd_ver 0.7.1
+
+#ENV http_proxy "http://icache.intranet.gr"
+#ENV https_proxy "http://icache.intranet.gr"
 
 ENTRYPOINT ["/entrypoint.sh"]
 
