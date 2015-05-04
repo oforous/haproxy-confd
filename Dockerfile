@@ -1,4 +1,4 @@
-FROM tianon/docker-brew-debian
+FROM debian:wheezy
 
 MAINTAINER oforous
 
@@ -13,6 +13,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 RUN	(echo "deb http://cdn.debian.net/debian wheezy-backports main" > /etc/apt/sources.list.d/backports.list) && \
 	DEBIAN_FRONTEND=noninteractive apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+        wget \
     	ca-certificates \
     	libssl1.0.0 \
 		software-properties-common python-software-properties \
